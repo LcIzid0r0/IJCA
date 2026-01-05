@@ -1,0 +1,905 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "mount_file_id": "14du7mUQoT6OmEE0-BL3C-neHB5L4XX96",
+      "authorship_tag": "ABX9TyP2+zPqiinQQYeJKFz+2QB6",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/LcIzid0r0/IJCA/blob/main/DESAFIO_FINAL_1001_CHAMADOS\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "IMPORTAÇÃO BIBLIOTECA"
+      ],
+      "metadata": {
+        "id": "jWPA5dBRz5F2"
+      }
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "aX69tmLGzC1E",
+        "outputId": "44a016cf-4fa6-4234-8f44-44c3af53f2be"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Requirement already satisfied: pyarrow in /usr/local/lib/python3.12/dist-packages (18.1.0)\n"
+          ]
+        }
+      ],
+      "source": [
+        "import pandas as pd\n",
+        "!pip install pyarrow\n",
+        "import io"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "IMPORTAÇÃO ARQUIVO PARQUETS"
+      ],
+      "metadata": {
+        "id": "Z6o4PGIaz753"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "file_path = '/content/drive/MyDrive/export_sd_chamados_part-00000-tid-3098383297386394530-495d5ca7-67ca-4c6c-99ac-35bc486f6633-29-1-c000.snappy.parquet'\n",
+        "df = pd.read_parquet(file_path)"
+      ],
+      "metadata": {
+        "id": "_pmSv8_pz7g0"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "PADRONIZAÇÃO None para Não Informado"
+      ],
+      "metadata": {
+        "id": "Pi3L0Y4l1ELO"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['requester.email_id'] = df['requester.email_id'].replace('None', 'Email Não Informado')"
+      ],
+      "metadata": {
+        "id": "-atftnI_tErX"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['requester.mobile'] = df['requester.mobile'].replace('None', 'Contato Não Informado')"
+      ],
+      "metadata": {
+        "id": "E4C3NW7gRJ8r"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['requester.phone'] = df['requester.phone'].replace('None', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "NXr2k5P6f9BE"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['requester.job_title'] = df['requester.job_title'].replace('None', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "VDyP7SrKPJpd"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['technician.email_id'] = df['technician.email_id'].replace('None', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "UgoXSxuWZliz"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['technician.mobile'] = df['technician.mobile'].replace('None', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "oyBalwGUaiiu"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['technician.phone'] = df['technician.phone'].replace('None', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "0Enm5dkefSoc"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['technician.employee_id'] = df['technician.employee_id'].replace('None', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "l2dEwpa1ftl8"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['technician.job_title'] = df['technician.job_title'].replace('None', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "RgkuM5tpiUiC"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "PADRONIZAÇÃO nan para Não Informado"
+      ],
+      "metadata": {
+        "id": "8Nywum_VUIyU"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['requester.site.deleted'] = df['requester.site.deleted'].replace('nan', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "yGYP0o04UIet"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['requester.site.name'] = df['requester.site.name'].replace('nan', 'Empresa Não Informada')"
+      ],
+      "metadata": {
+        "id": "w7O589e7U_Ow"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['requester.site.id'] = df['requester.site.id'].replace('nan', 'ID Não Informado')"
+      ],
+      "metadata": {
+        "id": "8wBMcTHnVbJJ"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['requester.site.is_default'] = df['requester.site.is_default'].replace('nan', 'Solicitante Não Informado')"
+      ],
+      "metadata": {
+        "id": "i8i4omAAfj_o"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['requester.department.site.id'] = df['requester.department.site.id'].replace('nan', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "eFz8JHlfjVOS"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['requester.department.name'] = df['requester.department.name'].replace('nan', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "GchYk5FYjtII"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['requester.department.id'] = df['requester.department.id'].replace('nan', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "xXeUCBpokC4B"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['technician.user_scope'] = df['technician.user_scope'].replace('nan', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "PRR4Yij2dp-Y"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['technician.site.id'] = df['technician.site.id'].replace('nan', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "PWT73qqre6Vi"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['technician.name'] = df['technician.name'].replace('nan', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "6vEHm9Z8fnRL"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['technician.id'] = df['technician.id'].replace('nan', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "G7os823ShOzm"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['technician.is_vip_user'] = df['technician.is_vip_user'].replace('nan', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "L69XM8jjhh7q"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['technician.department.id'] = df['technician.department.id'].replace('nan', 'Não Informado')"
+      ],
+      "metadata": {
+        "id": "e_PqsUA7iF-m"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['scheduled_end_time.value'] = df['scheduled_end_time.value'].replace('nan', 'Não Especificado')"
+      ],
+      "metadata": {
+        "id": "pvQzt4_pkR8e"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "DROP DE COLUNAS VAZIAS ( SEM INFORMAÇÃO )"
+      ],
+      "metadata": {
+        "id": "sqoKhci91qH0"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('cancel_flag_comments', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "mI6lepuY1VRt"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('scheduled_end_time', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "pak8s-4GPMeZ"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('maintenance', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "XK13N-YPPRME"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('technician', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "szTDEuCmPucr"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('requester.sms_mail', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "AH9M6gpwQwRt"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('requester.sms_mail_id', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "1NBu6R9HTScY"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('requester.cost_per_hour', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "TJ7unRMCTipn"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('requester.employee_id', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "D6tx3w60Wt_q"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('requester.photo_url', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "eGnsqJU5in-V"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "DROP DE COLUNA NÃO NECESSÁRIA"
+      ],
+      "metadata": {
+        "id": "0fPwADQCRHQJ"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('template.inactive', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "RBZBJcKiRGDm"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('template.id', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "1_8FCdhhRQN0"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('template.image', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "cZITg3Y_RQ8e"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('template.is_service_template', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "5QQ-b-pDRQvX"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('template.sort_index', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "r9n8EjzART6C"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('template.name', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "ny7za2faRUZx"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('created_time.display_value', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "YbIFVxm4UgJ9"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('due_by_time.display_value', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "4aGPu8mtWP8J"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('display_key.display_value', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "4eEWEsflW8ut"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('technician.sms_mail', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "Fwkrgb17aRBi"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('technician.sms_mail_id', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "sB225oNIeJVZ"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('technician.cost_per_hour', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "sqAJdIaBeejo"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('technician.last_name', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "4fVh0tElgCq4"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('technician.first_name', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "gAJYy_6JgCh4"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('technician.photo_url', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "H18sWHjEh5QJ"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('scheduled_end_time.display_value', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "7XMIWxr6jInl"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('technician.site', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "z9JfZ5pDm-Ju"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('technician.department', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "Urw1FjbJnNMM"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('requester.site', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "IqxYHlitnX3V"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.drop('requester.department', axis=1, inplace=True)"
+      ],
+      "metadata": {
+        "id": "mqno0mxbnktL"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "PADRONIZAÇÃO PARA FORMATO CORRETO DATA/HORA"
+      ],
+      "metadata": {
+        "id": "ZVg7FPtFTg85"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['created_time.value'] = df['created_time.value'] .astype(int)\n",
+        "df['created_time.value'] = pd.to_datetime(df['created_time.value'], unit='ms', utc=True).dt.tz_convert('America/Sao_Paulo')"
+      ],
+      "metadata": {
+        "id": "Hc23j-iPThsw"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['due_by_time.value'] = df['due_by_time.value'] .astype(int)\n",
+        "df['due_by_time.value'] = pd.to_datetime(df['due_by_time.value'], unit='ms', utc=True).dt.tz_convert('America/Sao_Paulo')"
+      ],
+      "metadata": {
+        "id": "qT2m_ceFV50f"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "pd.set_option('display.max_colwidth', None)\n",
+        "pd.set_option('display.max_rows', None)\n",
+        "pd.set_option('display.max_columns', None)\n",
+        "\n",
+        "#print(df['scheduled_end_time.value'])"
+      ],
+      "metadata": {
+        "id": "I8wCuG6ln1fn"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "VISUALIZAÇÃO DOS DADOS"
+      ],
+      "metadata": {
+        "id": "VEkjwOA0pUbc"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#df.head()\n",
+        "#df.info()"
+      ],
+      "metadata": {
+        "id": "RrL9P1lz0Kg_"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#pd.reset_option('display.max_colwidth')\n",
+        "#pd.reset_option('display.max_rows')\n",
+        "#pd.reset_option('display.max_columns')\n",
+        "#df['display_id'].unique()"
+      ],
+      "metadata": {
+        "id": "cJgAn8a1hTBO"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#print(df['display_id'])"
+      ],
+      "metadata": {
+        "id": "g7gbcFXrikE9"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#VERIFICAR MÁXIMO DE COLUNAS E LINHAS NULAS\n",
+        "\n",
+        "#pd.set_option('display.max_columns', None)\n",
+        "#pd.set_option('display.max_rows', None)\n",
+        "#display(df.isnull().sum())\n"
+      ],
+      "metadata": {
+        "id": "Chs3PvGl1WmG"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "DADOS TRATADOS  - DOWNLOAD"
+      ],
+      "metadata": {
+        "id": "KksyzQaNpeg1"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.to_parquet('dados_chamados.parquet', engine='pyarrow', compression='snappy')"
+      ],
+      "metadata": {
+        "id": "X750HDWxHc3P"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from google.colab import files\n",
+        "files.download('dados_chamados.parquet')"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 17
+        },
+        "id": "Bye7IeSyphfk",
+        "outputId": "11d5b7a3-7041-40e7-c783-b3c92c08c5ef"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Javascript object>"
+            ],
+            "application/javascript": [
+              "\n",
+              "    async function download(id, filename, size) {\n",
+              "      if (!google.colab.kernel.accessAllowed) {\n",
+              "        return;\n",
+              "      }\n",
+              "      const div = document.createElement('div');\n",
+              "      const label = document.createElement('label');\n",
+              "      label.textContent = `Downloading \"${filename}\": `;\n",
+              "      div.appendChild(label);\n",
+              "      const progress = document.createElement('progress');\n",
+              "      progress.max = size;\n",
+              "      div.appendChild(progress);\n",
+              "      document.body.appendChild(div);\n",
+              "\n",
+              "      const buffers = [];\n",
+              "      let downloaded = 0;\n",
+              "\n",
+              "      const channel = await google.colab.kernel.comms.open(id);\n",
+              "      // Send a message to notify the kernel that we're ready.\n",
+              "      channel.send({})\n",
+              "\n",
+              "      for await (const message of channel.messages) {\n",
+              "        // Send a message to notify the kernel that we're ready.\n",
+              "        channel.send({})\n",
+              "        if (message.buffers) {\n",
+              "          for (const buffer of message.buffers) {\n",
+              "            buffers.push(buffer);\n",
+              "            downloaded += buffer.byteLength;\n",
+              "            progress.value = downloaded;\n",
+              "          }\n",
+              "        }\n",
+              "      }\n",
+              "      const blob = new Blob(buffers, {type: 'application/binary'});\n",
+              "      const a = document.createElement('a');\n",
+              "      a.href = window.URL.createObjectURL(blob);\n",
+              "      a.download = filename;\n",
+              "      div.appendChild(a);\n",
+              "      a.click();\n",
+              "      div.remove();\n",
+              "    }\n",
+              "  "
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<IPython.core.display.Javascript object>"
+            ],
+            "application/javascript": [
+              "download(\"download_10d44883-216f-45e3-9297-8a52342c3866\", \"dados_chamados.parquet\", 175086)"
+            ]
+          },
+          "metadata": {}
+        }
+      ]
+    }
+  ]
+}
